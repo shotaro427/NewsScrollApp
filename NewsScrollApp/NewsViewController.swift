@@ -200,6 +200,8 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
         // ここでロード
         webView.load(urlRequest as URLRequest)
         
+        // webページをロードしている時はセルを押せないようにする
+        self.tableView.allowsSelection = false
     
     }
 
@@ -214,6 +216,9 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
         
         // インジケータを停止させる
         indicatorView.stopAnimating()
+        
+        // tableViewのセルを押せるようにする
+        self.tableView.allowsSelection = true
     }
 
     // キャンセル
