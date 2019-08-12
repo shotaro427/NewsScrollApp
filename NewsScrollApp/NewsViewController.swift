@@ -15,7 +15,10 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
 
     // 引っ張って更新
     var refreshControl: UIRefreshControl!
-
+    
+    // インジケータの変数
+    @IBOutlet var indicatorView: NVActivityIndicatorView!
+    
     // テーブルビューのインスタンスを取得
     var tableView: UITableView = UITableView()
 
@@ -70,6 +73,14 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
         // 最初は隠す（tableviewが表示されるのを邪魔しないように）
         webView.isHidden = true
         toolBar.isHidden = true
+        
+        // インジケータ関連
+        // インジケータの生成
+        indicatorView = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 60, height: 60), type: .lineScaleParty, color: UIColor.blue, padding: 0)
+        // インジケータの位置を画面中央にする
+        indicatorView.center = self.view.center
+        // インジケータの表示
+        self.view.addSubview(indicatorView)
 
         parseUrl()
     }
@@ -183,6 +194,9 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
             return
         }
         let urlRequest = NSURLRequest(url: url)
+        
+        // インジケータの表示
+        indicatorView.startAnimating()
         // ここでロード
         webView.load(urlRequest as URLRequest)
     }

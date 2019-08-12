@@ -2,9 +2,9 @@ PODS:
   - NVActivityIndicatorView (4.7.0):
     - NVActivityIndicatorView/Presenter (= 4.7.0)
   - NVActivityIndicatorView/Presenter (4.7.0)
-  - SDWebImage (4.4.6):
-    - SDWebImage/Core (= 4.4.6)
-  - SDWebImage/Core (4.4.6)
+  - SDWebImage (5.1.0):
+    - SDWebImage/Core (= 5.1.0)
+  - SDWebImage/Core (5.1.0)
   - XLPagerTabStrip (8.1.0)
 
 DEPENDENCIES:
@@ -20,7 +20,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   NVActivityIndicatorView: b19ddab2576f805cbe0fb2306cba3476e09a1dea
-  SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
+  SDWebImage: fb387001955223213dde14bc08c8b73f371f8d8f
   XLPagerTabStrip: 22d4c58200d7c105e0e407ab6bfd01a5d85014be
 
 PODFILE CHECKSUM: bce9b3ec2f0f3f9bd60094c1b6956c9362a062e6
