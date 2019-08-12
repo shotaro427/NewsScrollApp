@@ -82,6 +82,7 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
 
         parseUrl()
     }
+    
 
     @objc func refresh() {
         // 2秒後にdelayを呼ぶ
@@ -93,7 +94,10 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
         // refreshControlを終了
         refreshControl.endRefreshing()
     }
-
+    
+    
+    // ==================================================================================================
+    // XML解析の処理
     // urlを解析する
     func parseUrl() {
         // url型に変換
@@ -151,7 +155,10 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
             articles.append(elements)
         }
     }
+    // ==================================================================================================
 
+    // ====================================================================================
+    // tableViewの処理
     // セルの高さ
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
@@ -204,7 +211,11 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
         webView.load(urlRequest as URLRequest)
     
     }
+    // ==================================================================================================
+    
 
+    // ==================================================================================================
+    // webページの処理
     // ページの読み込み完了時に呼ばれる
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         //tableviewを隠す
@@ -221,12 +232,16 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
         // セルを選択できるようにする
         self.tableView.allowsSelection = true
     }
+    // ==================================================================================================
     
+    
+    // =============================================================================================
+    // インジケータの処理
     // インジケータと背景のviewを作る処理
     func createIndicator() {
         // インジケータ関連
         // インジケータの生成
-        indicatorView = NVActivityIndicatorView(frame: CGRect(x: 0, y: -50, width: 60, height: 60), type: .lineScaleParty, color: UIColor.blue, padding: 0)
+        indicatorView = NVActivityIndicatorView(frame: CGRect(x: 0, y: -50, width: 60, height: 60), type: .ballScaleRippleMultiple, color: UIColor.blue, padding: 0)
         // インジケータの位置を画面中央にする
         indicatorView.center = CGPoint(x: self.view.center.x, y: self.view.center.y - 50)
         // インジケータの表示
@@ -239,6 +254,9 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
         indicatorBackgroundView.alpha = 0.4
     }
 
+    
+    // ===========================================================================================
+    // ツールバーの処理
     // キャンセル
     @IBAction func cancel(_ sender: Any) {
         tableView.isHidden = false
