@@ -19,6 +19,9 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
     // インジケータの変数
     @IBOutlet var indicatorView: NVActivityIndicatorView!
     
+    // ロード画面時のview
+    var indicatorBackgroundView: UIView!
+    
     // テーブルビューのインスタンスを取得
     var tableView: UITableView = UITableView()
 
@@ -74,13 +77,8 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
         webView.isHidden = true
         toolBar.isHidden = true
         
-        // インジケータ関連
-        // インジケータの生成
-        indicatorView = NVActivityIndicatorView(frame: CGRect(x: 0, y: -50, width: 60, height: 60), type: .lineScaleParty, color: UIColor.blue, padding: 0)
-        // インジケータの位置を画面中央にする
-        indicatorView.center = CGPoint(x: self.view.center.x, y: self.view.center.y - 50)
-        // インジケータの表示
-        self.view.addSubview(indicatorView)
+        // インジケータと背景を作る
+        createIndicator()
 
         parseUrl()
     }
@@ -195,13 +193,15 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
         }
         let urlRequest = NSURLRequest(url: url)
         
+        // 背景を暗くする
+        self.view.addSubview(indicatorBackgroundView)
         // インジケータの表示
         indicatorView.startAnimating()
+        // セルを選択できなくする
+        self.tableView.allowsSelection = false
+        
         // ここでロード
         webView.load(urlRequest as URLRequest)
-        
-        // webページをロードしている時はセルを押せないようにする
-        self.tableView.allowsSelection = false
     
     }
 
@@ -216,9 +216,27 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
         
         // インジケータを停止させる
         indicatorView.stopAnimating()
-        
-        // tableViewのセルを押せるようにする
+        // 背景を元に戻す
+        indicatorBackgroundView.removeFromSuperview()
+        // セルを選択できるようにする
         self.tableView.allowsSelection = true
+    }
+    
+    // インジケータと背景のviewを作る処理
+    func createIndicator() {
+        // インジケータ関連
+        // インジケータの生成
+        indicatorView = NVActivityIndicatorView(frame: CGRect(x: 0, y: -50, width: 60, height: 60), type: .lineScaleParty, color: UIColor.blue, padding: 0)
+        // インジケータの位置を画面中央にする
+        indicatorView.center = CGPoint(x: self.view.center.x, y: self.view.center.y - 50)
+        // インジケータの表示
+        self.view.addSubview(indicatorView)
+        // インジケータの背景
+        indicatorBackgroundView = UIView(frame: self.view.bounds)
+        // 背景色を黒にする
+        indicatorBackgroundView.backgroundColor = UIColor.black
+        // 透明度を変更
+        indicatorBackgroundView.alpha = 0.4
     }
 
     // キャンセル
