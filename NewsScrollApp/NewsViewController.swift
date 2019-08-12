@@ -76,9 +76,9 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
         
         // インジケータ関連
         // インジケータの生成
-        indicatorView = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 60, height: 60), type: .lineScaleParty, color: UIColor.blue, padding: 0)
+        indicatorView = NVActivityIndicatorView(frame: CGRect(x: 0, y: -50, width: 60, height: 60), type: .lineScaleParty, color: UIColor.blue, padding: 0)
         // インジケータの位置を画面中央にする
-        indicatorView.center = self.view.center
+        indicatorView.center = CGPoint(x: self.view.center.x, y: self.view.center.y - 50)
         // インジケータの表示
         self.view.addSubview(indicatorView)
 
@@ -199,6 +199,8 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
         indicatorView.startAnimating()
         // ここでロード
         webView.load(urlRequest as URLRequest)
+        
+    
     }
 
     // ページの読み込み完了時に呼ばれる
@@ -209,6 +211,9 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
         toolBar.isHidden = false
         // webviewを表示する
         webView.isHidden = false
+        
+        // インジケータを停止させる
+        indicatorView.stopAnimating()
     }
 
     // キャンセル
