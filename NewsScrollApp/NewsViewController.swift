@@ -7,14 +7,21 @@
 //
 
 import UIKit
-import XLPagerTabStrip
+import  XLPagerTabStrip
 import WebKit
+import NVActivityIndicatorView
 
 class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDataSource, UITableViewDelegate, WKNavigationDelegate, XMLParserDelegate{
 
     // 引っ張って更新
     var refreshControl: UIRefreshControl!
-
+    
+    // インジケータ
+    @IBOutlet var indicatorView: NVActivityIndicatorView!
+    
+    // ロード画面時のview
+    var indicatorBackgroundView: UIView!
+    
     // テーブルビューのインスタンスを取得
     var tableView: UITableView = UITableView()
 
@@ -31,7 +38,6 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
     var titleString: String = ""
     // XMLファイルのリンク情報
     var linkString: String = ""
-
 
     // webview
     @IBOutlet weak var webView: WKWebView!
@@ -69,10 +75,13 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
         // 最初は隠す（tableviewが表示されるのを邪魔しないように）
         webView.isHidden = true
         toolBar.isHidden = true
+        
+        // インジケータと背景を作る
+        createIndicator()
 
         parseUrl()
     }
-
+    
     @objc func refresh() {
         // 2秒後にdelayを呼ぶ
         perform(#selector(delay), with: nil, afterDelay: 2.0)
@@ -83,7 +92,9 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
         // refreshControlを終了
         refreshControl.endRefreshing()
     }
-
+    
+    // ==================================================================================================
+    // XML解析の処理
     // urlを解析する
     func parseUrl() {
         // url型に変換
@@ -141,7 +152,10 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
             articles.append(elements)
         }
     }
+    // ==================================================================================================
 
+    // ====================================================================================
+    // tableViewの処理
     // セルの高さ
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
@@ -182,10 +196,22 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
             return
         }
         let urlRequest = NSURLRequest(url: url)
+        
+        // 背景を暗くする
+        self.view.addSubview(indicatorBackgroundView)
+        // インジケータの表示
+        indicatorView.startAnimating()
+        // セルを選択できなくする
+        self.tableView.allowsSelection = false
+        
         // ここでロード
         webView.load(urlRequest as URLRequest)
+    
     }
-
+    // ==================================================================================================
+    
+    // ==================================================================================================
+    // webページの処理
     // ページの読み込み完了時に呼ばれる
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         //tableviewを隠す
@@ -194,8 +220,37 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
         toolBar.isHidden = false
         // webviewを表示する
         webView.isHidden = false
+        
+        // インジケータを停止させる
+        indicatorView.stopAnimating()
+        // 背景を元に戻す
+        indicatorBackgroundView.removeFromSuperview()
+        // セルを選択できるようにする
+        self.tableView.allowsSelection = true
+    }
+    // ==================================================================================================
+    
+    // =============================================================================================
+    // インジケータの処理
+    // インジケータと背景のviewを作る処理
+    func createIndicator() {
+        // インジケータ関連
+        // インジケータの生成
+        indicatorView = NVActivityIndicatorView(frame: CGRect(x: 0, y: -50, width: 60, height: 60), type: .ballScaleRippleMultiple, color: UIColor.blue, padding: 0)
+        // インジケータの位置を画面中央にする
+        indicatorView.center = CGPoint(x: self.view.center.x, y: self.view.center.y - 50)
+        // インジケータの表示
+        self.view.addSubview(indicatorView)
+        // インジケータの背景
+        indicatorBackgroundView = UIView(frame: self.view.bounds)
+        // 背景色を黒にする
+        indicatorBackgroundView.backgroundColor = UIColor.black
+        // 透明度を変更
+        indicatorBackgroundView.alpha = 0.4
     }
 
+    // ===========================================================================================
+    // ツールバーの処理
     // キャンセル
     @IBAction func cancel(_ sender: Any) {
         tableView.isHidden = false

@@ -1,22 +1,28 @@
 PODS:
-  - SDWebImage (4.4.6):
-    - SDWebImage/Core (= 4.4.6)
-  - SDWebImage/Core (4.4.6)
+  - NVActivityIndicatorView (4.7.0):
+    - NVActivityIndicatorView/Presenter (= 4.7.0)
+  - NVActivityIndicatorView/Presenter (4.7.0)
+  - SDWebImage (5.1.0):
+    - SDWebImage/Core (= 5.1.0)
+  - SDWebImage/Core (5.1.0)
   - XLPagerTabStrip (8.1.0)
 
 DEPENDENCIES:
+  - NVActivityIndicatorView
   - SDWebImage
   - XLPagerTabStrip
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - NVActivityIndicatorView
     - SDWebImage
     - XLPagerTabStrip
 
 SPEC CHECKSUMS:
-  SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
+  NVActivityIndicatorView: b19ddab2576f805cbe0fb2306cba3476e09a1dea
+  SDWebImage: fb387001955223213dde14bc08c8b73f371f8d8f
   XLPagerTabStrip: 22d4c58200d7c105e0e407ab6bfd01a5d85014be
 
-PODFILE CHECKSUM: 2954b69e5fad05e51f9f44400418378aa2c96916
+PODFILE CHECKSUM: bce9b3ec2f0f3f9bd60094c1b6956c9362a062e6
 
-COCOAPODS: 1.7.0.beta.2
+COCOAPODS: 1.6.1
