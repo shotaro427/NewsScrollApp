@@ -16,7 +16,7 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
     // 引っ張って更新
     var refreshControl: UIRefreshControl!
     
-    // インジケータの変数
+    // インジケータ
     @IBOutlet var indicatorView: NVActivityIndicatorView!
     
     // ロード画面時のview
@@ -254,7 +254,6 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
         indicatorBackgroundView.alpha = 0.4
     }
 
-    
     // ===========================================================================================
     // ツールバーの処理
     // キャンセル
