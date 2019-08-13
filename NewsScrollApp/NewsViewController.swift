@@ -39,7 +39,6 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
     // XMLファイルのリンク情報
     var linkString: String = ""
 
-
     // webview
     @IBOutlet weak var webView: WKWebView!
 
@@ -83,7 +82,6 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
         parseUrl()
     }
     
-
     @objc func refresh() {
         // 2秒後にdelayを呼ぶ
         perform(#selector(delay), with: nil, afterDelay: 2.0)
@@ -94,7 +92,6 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
         // refreshControlを終了
         refreshControl.endRefreshing()
     }
-    
     
     // ==================================================================================================
     // XML解析の処理
@@ -213,7 +210,6 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
     }
     // ==================================================================================================
     
-
     // ==================================================================================================
     // webページの処理
     // ページの読み込み完了時に呼ばれる
@@ -233,7 +229,6 @@ class NewsViewController: UIViewController, IndicatorInfoProvider, UITableViewDa
         self.tableView.allowsSelection = true
     }
     // ==================================================================================================
-    
     
     // =============================================================================================
     // インジケータの処理
